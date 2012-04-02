@@ -43,7 +43,7 @@
 
     <properties>
     
-        <james.server.version>3.0-beta4</james.server.version>
+        <james.server.version>3.0-beta5-SNAPSHOT</james.server.version>
 
         <!-- For more details see -->
         <!-- http://java.sun.com/products/javamail/javadocs/javax/mail/internet/package-summary.html -->
