@@ -24,7 +24,7 @@
     <parent>
       <groupId>org.apache.james</groupId>
         <artifactId>james-server</artifactId>
-        <version>3.0-beta4</version>
+        <version>3.0-beta5-SNAPSHOT</version>
         <relativePath />
     </parent>
 
@@ -270,7 +270,6 @@
         <groupId>org.apache.james</groupId>
         <artifactId>james-server-protocols-imap4</artifactId>
         <scope>runtime</scope>
-        <version>${james.server.version}</version>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
@@ -415,10 +414,19 @@
         <scope>runtime</scope>
         <version>${james.server.version}</version>
     </dependency>
+
+<!-- 
     <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>apache-james-imap-processor</artifactId>
         <scope>runtime</scope>
+    </dependency>
+ -->
+    <dependency>
+        <groupId>org.apache.james.protocols</groupId>
+        <artifactId>protocols-imap</artifactId>
+        <scope>runtime</scope>
+        <version>${protocols.version}</version>
     </dependency>
     </dependencies>
 
