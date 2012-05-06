@@ -564,6 +564,7 @@
                 </platforms>
                 <generatorConfigurations>
                 <generatorConfiguration>
+
                     <generator>jsw</generator>
                     <includes>
                     <include>linux-x86-32</include>
@@ -578,9 +579,14 @@
                     </includes>
 
                     <configuration>
+                    <!-- add to to the classpath in this order: config files, user jars, james jars.-->
                     <property>
                         <name>configuration.directory.in.classpath.first</name>
                         <value>../conf</value>
+                    </property>
+                    <property>
+                         <name>configuration.directory.in.classpath.first</name>
+                         <value>../conf/lib</value>
                     </property>
                     <property>
                         <name>set.default.REPO_DIR</name>
