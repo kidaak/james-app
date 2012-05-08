@@ -579,13 +579,13 @@
                     </includes>
 
                     <configuration>
-                    <!-- add to to the classpath in this order: config files, user jars, james jars.-->
+                    <!-- add to to the classpath in this order: config files, james jars, user jars.-->
                     <property>
                         <name>configuration.directory.in.classpath.first</name>
                         <value>../conf</value>
                     </property>
                     <property>
-                         <name>configuration.directory.in.classpath.first</name>
+                         <name>configuration.directory.in.classpath.last</name>
                          <value>../conf/lib</value>
                     </property>
                     <property>
