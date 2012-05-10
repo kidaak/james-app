@@ -18,28 +18,30 @@
   under the License.    
 -->
 
-<beans xmlns="http://www.springframework.org/schema/beans" 
+<beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:camel="http://camel.apache.org/schema/spring"
-       xmlns:amq="http://activemq.apache.org/schema/core" 
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xmlns:jetm="http://jetm.void.fm/schema/jetm_spring_config_1_2"
        xsi:schemaLocation="
           http://www.springframework.org/schema/beans classpath:org/springframework/beans/factory/xml/spring-beans-3.0.xsd
           http://camel.apache.org/schema/spring classpath:camel-spring.xsd
-          http://activemq.apache.org/schema/core classpath:activemq.xsd">
+          http://activemq.apache.org/schema/core classpath:activemq.xsd
+          http://jetm.void.fm/schema/jetm_spring_config_1_2 http://jetm.void.fm/schema/jetm_spring_config_1_2.xsd">
 
     <!-- 
     ===========================================================================
        Spring Wiring for James Server: Annotation, Bean Post-Processors...
     ===========================================================================
     -->
-          
+
     <!-- 
       Enable Java Annotations processing.
      -->
     <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor">
         <property name="order" value="3" />
     </bean>
-    
+
     <!-- 
       Enable support for Persistence Annotations processing.
      -->
@@ -124,7 +126,7 @@
        Queues
     ===========================================================================
     -->
-          
+
     <!-- 
       Mail Queue Factory
      -->
@@ -182,12 +184,12 @@
        Mailet Container
     ===========================================================================
     -->
-          
+
     <!-- 
       Mailet Container Beans.
      -->
     <bean id="mailprocessor" name="processorRoute" class="org.apache.james.mailetcontainer.impl.camel.CamelCompositeProcessor"/>
-  
+
     <!-- 
       !!! mailetcontext bean must be defined after mailProcessor 
           otherwise LogEnabled injection via LogEnabledBeanPostProcessor will not occur before 
@@ -207,7 +209,7 @@
      -->
     <camel:camelContext id="jamesCamelContext" trace="false" >
         <camel:jmxAgent id="agent" disabled="false" createConnector="false" serviceUrlPath="/jmxrmi/jamescamel"/>
-        <camel:template id="producerTemplate"/>   
+        <camel:template id="producerTemplate"/>
     </camel:camelContext>
 
     <!-- 
@@ -215,7 +217,7 @@
        File System
     ===========================================================================
     -->
-          
+
     <bean class="org.apache.james.container.spring.bean.factorypostprocessor.FileSystemBeanFactoryPostProcessor">
         <property name="fileSystem" ref="filesystem" />
     </bean>
@@ -226,7 +228,7 @@
        DNS Service
     ===========================================================================
     -->
-          
+
     <bean id="dnsservice" class="org.apache.james.dnsservice.dnsjava.DNSJavaService" />
 
     <!-- 
@@ -244,7 +246,7 @@
     ===========================================================================
     -->
    <bean id="protocolhandlerloader" class="org.apache.james.container.spring.bean.factory.protocols.ProtocolHandlerLoaderBeanFactory" />
-    
+
     <!-- 
       SMTP Server
      -->
@@ -254,7 +256,7 @@
       LMTP Server
      -->
     <bean id="lmtpserver" class="org.apache.james.lmtpserver.netty.LMTPServerFactory"/>
- 
+
     <!-- 
       POP3 Server
      -->
@@ -265,7 +267,7 @@
      -->
     <bean id="imapserver" class="org.apache.james.imapserver.netty.IMAPServerFactory">
         <property name="imapDecoder" ref="imapDecoder"/>
-        <property name="imapEncoder" ref="imapEncoder"/>    
+        <property name="imapEncoder" ref="imapEncoder"/>
     </bean>
     <!-- The imapProcessor configuration will be reviewed when IMAP will be integrated into Protocols project -->
     <!-- Temporary configuration - see IMAP-357 -->
@@ -293,12 +295,12 @@
        Mailbox
     ===========================================================================
     -->
-          
+
     <!-- 
       Mailbox Managers
      -->
     <bean class="org.apache.james.container.spring.bean.factorypostprocessor.MailboxConfigurationBeanFactoryPostProcessor"/>
-     
+
     <bean id="locker" class="org.apache.james.mailbox.store.JVMMailboxPathLocker"/>
     <import resource="classpath:META-INF/org/apache/james/spring-mailbox.xml" />
 
@@ -306,18 +308,18 @@
       Mailbox Copier
      -->
     <bean id="mailboxcopier" class="org.apache.james.mailbox.copier.MailboxCopierImpl"/>
-          
+
     <!-- 
       Mailbox Importer
      -->
     <bean id="james23importer" class="org.apache.james.container.spring.tool.James23Importer"/>
-          
+
     <!-- 
     ===========================================================================
        Database DataSource
     ===========================================================================
     -->
-          
+
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
         <property name ="location" value="classpath:james-database.properties"/>
@@ -354,13 +356,13 @@
         <!-- set this to true for debugging purposes -->
         <property name="showSql" value="false"/>
     </bean>
-    
+
     <!-- 
     ===========================================================================
        JMX
     ===========================================================================
     -->
-          
+
     <!-- 
       JMX Server
      -->
@@ -375,15 +377,15 @@
     <bean id="serverConnector" class="org.springframework.jmx.support.ConnectorServerFactoryBean" depends-on="registry">
         <property name="objectName" value="connector:name=rmi" />
         <property name="serviceUrl" value="service:jmx:rmi://${jmx.address}/jndi/rmi://${jmx.address}:${jmx.port}/jmxrmi" />
-    </bean> 
+    </bean>
     <bean id="registry" class="org.springframework.remoting.rmi.RmiRegistryFactoryBean">
         <property name="port" value="${jmx.port}" />
         <property name="serverSocketFactory" ref="restrictedRmiSocketFactory"/>
         <property name="clientSocketFactory" ref="restrictedRmiSocketFactory"/>
-    </bean> 
+    </bean>
     <bean id="restrictedRmiSocketFactory" class="org.apache.james.util.RestrictingRMISocketFactory">
         <constructor-arg value="${jmx.address}"/>
-    </bean>   
+    </bean>
 
     <!-- 
       JMX Export
@@ -415,5 +417,59 @@
     <bean id="mailboxmanagermanagement" class="org.apache.james.adapter.mailbox.MailboxManagerManagement" />
     <bean id="mailboxcopiermanagement" class="org.apache.james.container.spring.mailbox.MailboxCopierManagement" />
     <bean id="james23importermanagement" class="org.apache.james.container.spring.tool.James23ImporterManagement" />
+
+    <!--
+    jetm performance monitoring
+    -->
+    <bean id="etmMonitor" class="etm.core.monitor.NestedMonitor"
+          init-method="start" destroy-method="stop" />
+    <bean id="etmHttpConsole" class="etm.contrib.console.HttpConsoleServer"
+          init-method="start" destroy-method="stop" autowire="constructor"/>
+
+    <bean id="etmMethodCallInterceptor"
+          class="etm.contrib.aop.aopalliance.EtmMethodCallInterceptor"
+          autowire="constructor"/>
+
+    <bean id="etmAutoProxy"
+          class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="interceptorNames">
+            <list>
+                <value>etmMethodCallInterceptor</value>
+            </list>
+        </property>
+        <!-- add the beans that you wish to monitor to the list bellow -->
+        <property name="beanNames">
+            <list>
+                <value>usersrepository</value>
+                <value>recipientrewritetable</value>
+                <value>domainlist</value>
+                <value>mailrepositorystore</value>
+                <!--
+            The folowing beans require CGLIB2 to be on the classpath -->
+                <!--
+            <value>mailqueuefactory</value>
+            <value>blobTransferPolicy</value>
+            <value>jmsConnectionFactory</value>
+            -->
+                <value>jmsTransactionManager</value>
+                <value>mailprocessor</value>
+                <value>mailetcontext</value>
+                <value>mailspooler</value>
+                <value>mailetloader</value>
+                <value>matcherloader</value>
+                <value>filesystem</value>
+                <value>dnsservice</value>
+                <value>fetchmail</value>
+                <value>smtpserver</value>
+                <value>pop3server</value>
+                <value>lmtpserver</value>
+                <value>imapserver</value>
+                <value>imapDecoder</value>
+                <value>imapEncoder</value>
+                <value>locker</value>
+                <value>datasource</value>
+            </list>
+        </property>
+    </bean>
 
 </beans>
