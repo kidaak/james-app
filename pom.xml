@@ -428,18 +428,7 @@
         <scope>runtime</scope>
         <version>${protocols.version}</version>
     </dependency>
-    <dependency>
-        <groupId>fm.void.jetm</groupId>
-        <artifactId>jetm</artifactId>
-        <version>1.2.3</version>
-    </dependency>
-    <dependency>
-        <groupId>fm.void.jetm</groupId>
-        <artifactId>jetm-optional</artifactId>
-        <version>1.2.3</version>
-    </dependency>
     </dependencies>
-
     <build>
     <plugins>
         <plugin>
@@ -872,6 +861,26 @@
     </build>
 
     <profiles>
+    <profile>
+        <id>with-jetm</id>
+        <activation>
+            <!-- remember to comment out the jetm-monitoring import line from spring-server.xml if you de-activate this
+            -->
+            <activeByDefault>true</activeByDefault>
+        </activation>
+        <dependencies>
+            <dependency>
+                <groupId>fm.void.jetm</groupId>
+                <artifactId>jetm</artifactId>
+                <version>1.2.3</version>
+            </dependency>
+            <dependency>
+                <groupId>fm.void.jetm</groupId>
+                <artifactId>jetm-optional</artifactId>
+                <version>1.2.3</version>
+            </dependency>
+        </dependencies>
+    </profile>
     <profile>
         <id>make-deb</id>
         <build>

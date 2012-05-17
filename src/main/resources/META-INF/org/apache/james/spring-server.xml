@@ -22,12 +22,10 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:camel="http://camel.apache.org/schema/spring"
        xmlns:amq="http://activemq.apache.org/schema/core"
-       xmlns:jetm="http://jetm.void.fm/schema/jetm_spring_config_1_2"
        xsi:schemaLocation="
           http://www.springframework.org/schema/beans classpath:org/springframework/beans/factory/xml/spring-beans-3.0.xsd
           http://camel.apache.org/schema/spring classpath:camel-spring.xsd
-          http://activemq.apache.org/schema/core classpath:activemq.xsd
-          http://jetm.void.fm/schema/jetm_spring_config_1_2 http://jetm.void.fm/schema/jetm_spring_config_1_2.xsd">
+          http://activemq.apache.org/schema/core classpath:activemq.xsd">
 
     <!-- 
     ===========================================================================
@@ -418,58 +416,9 @@
     <bean id="mailboxcopiermanagement" class="org.apache.james.container.spring.mailbox.MailboxCopierManagement" />
     <bean id="james23importermanagement" class="org.apache.james.container.spring.tool.James23ImporterManagement" />
 
-    <!--
-    jetm performance monitoring
-    -->
-    <bean id="etmMonitor" class="etm.core.monitor.NestedMonitor"
-          init-method="start" destroy-method="stop" />
-    <bean id="etmHttpConsole" class="etm.contrib.console.HttpConsoleServer"
-          init-method="start" destroy-method="stop" autowire="constructor"/>
-
-    <bean id="etmMethodCallInterceptor"
-          class="etm.contrib.aop.aopalliance.EtmMethodCallInterceptor"
-          autowire="constructor"/>
-
-    <bean id="etmAutoProxy"
-          class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
-        <property name="interceptorNames">
-            <list>
-                <value>etmMethodCallInterceptor</value>
-            </list>
-        </property>
-        <!-- add the beans that you wish to monitor to the list bellow -->
-        <property name="beanNames">
-            <list>
-                <value>usersrepository</value>
-                <value>recipientrewritetable</value>
-                <value>domainlist</value>
-                <value>mailrepositorystore</value>
-                <!--
-            The folowing beans require CGLIB2 to be on the classpath -->
-                <!--
-            <value>mailqueuefactory</value>
-            <value>blobTransferPolicy</value>
-            <value>jmsConnectionFactory</value>
-            -->
-                <value>jmsTransactionManager</value>
-                <value>mailprocessor</value>
-                <value>mailetcontext</value>
-                <value>mailspooler</value>
-                <value>mailetloader</value>
-                <value>matcherloader</value>
-                <value>filesystem</value>
-                <value>dnsservice</value>
-                <value>fetchmail</value>
-                <value>smtpserver</value>
-                <value>pop3server</value>
-                <value>lmtpserver</value>
-                <value>imapserver</value>
-                <value>imapDecoder</value>
-                <value>imapEncoder</value>
-                <value>locker</value>
-                <value>datasource</value>
-            </list>
-        </property>
-    </bean>
+<!-- uncomment the folowing line to enable JETM monitoring -->
+<!--
+    <import resource="classpath:jetm-monitoring.conf" />
+-->
 
 </beans>
