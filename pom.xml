@@ -74,7 +74,7 @@
         <james.system-property1>-Djames.message.usememorycopy=false</james.system-property1>
         <james.system-properties>${james.system-property1}</james.system-properties>
         <!-- this name is used for James's folders on Debian systems and james user -->
-        <james.debian.user>james</james.debian.user>
+        <james.debian.user>apache-james</james.debian.user>
 
     </properties>
 
@@ -895,9 +895,12 @@
             <targetPath>${project.build.directory}/debian/control</targetPath>
             </resource>
             <resource>
+                <directory>src/main/app</directory>
+                <targetPath>${project.build.directory}/${project.artifactId}</targetPath>
+            </resource>
+            <resource>
             <directory>src/main/resources</directory>
-                            <!-- override the destination directory for this resource -->
-            <targetPath>${project.build.directory}/debian/resources</targetPath>
+            <targetPath>${project.build.directory}/${project.artifactId}/conf</targetPath>
             <includes>
                 <include>**/*.*</include>
             </includes>
@@ -916,28 +919,13 @@
                 </goals>
                 <configuration>
                     <deb>${project.build.directory}/${project.artifactId}_${project.version}_all.deb</deb>
+
                     <dataSet>
+                    <!-- all files and dirs -->
                     <data>
-                        <src>${project.build.directory}/${project.build.finalName}.jar</src>
-                        <type>file</type>
-                        <mapper>
-                        <type>file</type>
-                        <prefix>/</prefix>
-                        </mapper>
-                        <mapper>
-                        <type>perm</type>
-                        <prefix>/usr/share/${project.artifactId}</prefix>
-                        <user>root</user>
-                        <group>root</group>
-                        <filemode>644</filemode>
-                        </mapper>
-                    </data>
-                                        <!-- all files and dirs -->
-                    <data>
-                        <src>${project.basedir}/src/main/app</src>
+                        <src>${project.build.directory}/${project.artifactId}</src>
                         <type>directory</type>
-                        <includes>*</includes>
-                        <excludes>**/.svn</excludes>
+                        <includes>**/*</includes>
                         <mapper>
                         <type>directory</type>
                         <prefix>/usr/share/${project.artifactId}</prefix>
@@ -945,30 +933,82 @@
                         <mapper>
                         <type>perm</type>
                         <prefix>/usr/share/${project.artifactId}</prefix>
-                        <user>root</user>
-                        <group>root</group>
                         <filemode>755</filemode>
                         </mapper>
                     </data>
-                                       <!-- conf files - in the future: move them to /usr/share/james/conf ?? -->
-                    <data>
-                        <src>${project.build.directory}/debian/resources</src>
-                        <type>directory</type>
-                        <includes>*</includes>
-                        <excludes>**/.svn</excludes>
-                        <mapper>
-                        <type>directory</type>
-                        <prefix>/etc/${project.artifactId}</prefix>
-                        </mapper>
-                        <mapper>
-                        <type>perm</type>
-                        <prefix>/etc/${project.artifactId}</prefix>
-                        <user>root</user>
-                        <group>root</group>
-                        <filemode>644</filemode>
-                        </mapper>
-                    </data>
-                                        <!-- package documentation files (realease info, install, no javadoc) -->
+                        <!-- add the generated jsw daemon and binaries -->
+                        <data>
+                            <src>${project.build.directory}/appassembler/bin</src>
+                            <type>directory</type>
+                            <includes>**/*</includes>
+                            <mapper>
+                                <type>directory</type>
+                                <prefix>/usr/share/${project.artifactId}/bin</prefix>
+                            </mapper>
+                            <mapper>
+                                <type>perm</type>
+                                <prefix>/usr/share/${project.artifactId}/bin</prefix>
+                                <filemode>755</filemode>
+                            </mapper>
+                        </data>
+                        <data>
+                            <src>${project.build.directory}/appassembler/jsw/james/bin</src>
+                            <type>directory</type>
+                            <includes>**/*</includes>
+                            <mapper>
+                                <type>directory</type>
+                                <prefix>/usr/share/${project.artifactId}/bin</prefix>
+                            </mapper>
+                            <mapper>
+                                <type>perm</type>
+                                <prefix>/usr/share/${project.artifactId}/bin</prefix>
+                                <filemode>755</filemode>
+                            </mapper>
+                        </data>
+                        <data>
+                            <src>${project.build.directory}/appassembler/jsw/james/lib</src>
+                            <type>directory</type>
+                            <includes>**/*</includes>
+                            <excludes>libwrapper*</excludes>
+                            <mapper>
+                                <type>directory</type>
+                                <prefix>/usr/share/${project.artifactId}/lib</prefix>
+                            </mapper>
+                            <mapper>
+                                <type>perm</type>
+                                <prefix>/usr/share/${project.artifactId}/lib</prefix>
+                                <filemode>755</filemode>
+                            </mapper>
+                        </data>
+                        <data>
+                            <src>${project.build.directory}/appassembler/jsw/james/lib</src>
+                            <type>directory</type>
+                            <includes>libwrapper*</includes>
+                            <mapper>
+                                <type>directory</type>
+                                <prefix>/usr/share/${project.artifactId}/bin</prefix>
+                            </mapper>
+                            <mapper>
+                                <type>perm</type>
+                                <prefix>/usr/share/${project.artifactId}/bin</prefix>
+                                <filemode>755</filemode>
+                            </mapper>
+                        </data>
+                        <data>
+                            <src>${project.build.directory}/appassembler/jsw/james/conf</src>
+                            <type>directory</type>
+                            <includes>**/*</includes>
+                            <mapper>
+                                <type>directory</type>
+                                <prefix>/usr/share/${project.artifactId}/conf</prefix>
+                            </mapper>
+                            <mapper>
+                                <type>perm</type>
+                                <prefix>/usr/share/${project.artifactId}/conf</prefix>
+                                <filemode>755</filemode>
+                            </mapper>
+                        </data>
+                        <!-- package documentation files (realease info, install, no javadoc) -->
                     <data>
                         <src>${project.basedir}</src>
                         <type>directory</type>
@@ -980,8 +1020,6 @@
                         <mapper>
                         <type>perm</type>
                         <prefix>/usr/share/doc/${project.artifactId}</prefix>
-                        <user>root</user>
-                        <group>root</group>
                         <filemode>644</filemode>
                         </mapper>
                     </data>
@@ -995,8 +1033,6 @@
                         <mapper>
                         <type>perm</type>
                         <prefix>/usr/share/doc/${project.artifactId}</prefix>
-                        <user>root</user>
-                        <group>root</group>
                         <filemode>644</filemode>
                         </mapper>
                     </data>
@@ -1011,15 +1047,11 @@
                         <mapper>
                         <type>perm</type>
                         <prefix>/usr/share/${project.artifactId}/lib</prefix>
-                        <user>root</user>
-                        <group>root</group>
                         <filemode>644</filemode>
                         </mapper>
                     </data>
                     </dataSet>
                     <controlDir>${project.build.directory}/debian/control</controlDir>
-                    <changesIn>${project.basedir}README.txt</changesIn>
-                    <changesOut>${project.build.directory}/${project.build.finalName}.changes</changesOut>
                 </configuration>
                 </execution>
             </executions>
