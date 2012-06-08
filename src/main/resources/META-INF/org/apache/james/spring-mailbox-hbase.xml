@@ -32,13 +32,15 @@
         This is the link to the HBase Cluster. You need to place a valid hbase 
         config file on the classpath that will be picked up by HBaseConfiguration.create().
     -->
-    <!-- 
+    <!--
     <bean id="hbase-conf" class="org.apache.hadoop.hbase.HBaseConfiguration" factory-method="create" />
 
     <bean id="hbase-mailboxmanager" class="org.apache.james.mailbox.hbase.HBaseMailboxManager" init-method="init">
         <constructor-arg index="0" ref="hbase-sessionMapperFactory"/>
         <constructor-arg index="1" ref="authenticator"/>
         <constructor-arg index="2" ref="hbase-locker"/>
+        <constructor-arg index="3" ref="aclResolver"/>
+        <constructor-arg index="4" ref="groupMembershipResolver"/>
     </bean>
     
     <bean id="hbase-sessionMapperFactory" class="org.apache.james.mailbox.hbase.HBaseMailboxSessionMapperFactory">
@@ -53,6 +55,6 @@
         <constructor-arg index="0" ref="hbase-conf"/>
     </bean>
     
-    <alias name="jvm-locker" alias="hbase-locker"/>
+    <alias name="locker" alias="hbase-locker"/>
     -->
 </beans>
