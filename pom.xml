@@ -585,7 +585,7 @@
                     </property>
                     <property>
                          <name>configuration.directory.in.classpath.last</name>
-                         <value>../conf/lib</value>
+                         <value>../conf/lib/*</value>
                     </property>
                     <property>
                         <name>set.default.REPO_DIR</name>
