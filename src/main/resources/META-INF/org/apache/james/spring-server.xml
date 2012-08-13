@@ -126,9 +126,14 @@
     -->
 
     <!-- 
-      Mail Queue Factory
+      Alternative queue is FileMailQueueFactory - Can be used instead of the default one.
+    <bean id="mailqueuefactory" class="org.apache.james.queue.file.FileMailQueueFactory" />
      -->
-    <bean id="mailqueuefactory" class="org.apache.james.queue.activemq.ActiveMQMailQueueFactory" depends-on="broker"/>
+
+    <!-- 
+      Default Mail Queue Factory is the ActiveMQMailQueueFactory
+     -->
+    <bean id="mailqueuefactory" class="org.apache.james.queue.activemq.ActiveMQMailQueueFactory" depends-on="broker" />
 
     <!-- 
       ActiveMQ: Broker, Connections, BlobTransferPolicy...
@@ -207,7 +212,6 @@
      -->
     <camel:camelContext id="jamesCamelContext" trace="false" >
         <camel:jmxAgent id="agent" disabled="false" createConnector="false" serviceUrlPath="/jmxrmi/jamescamel"/>
-        <camel:template id="producerTemplate"/>
     </camel:camelContext>
 
     <!-- 
