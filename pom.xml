@@ -88,16 +88,34 @@
         <groupId>org.apache.james</groupId>
         <artifactId>james-server-core</artifactId>
           <version>${james.server.version}</version>
+          <exclusions>
+            <exclusion>
+              <artifactId>mail</artifactId>
+              <groupId>javax.mail</groupId>
+            </exclusion>
+          </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>james-server-data-api</artifactId>
           <version>${james.server.version}</version>
+          <exclusions>
+            <exclusion>
+              <artifactId>mail</artifactId>
+              <groupId>javax.mail</groupId>
+            </exclusion>
+          </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>james-server-dnsservice-library</artifactId>
           <version>${james.server.version}</version>
+          <exclusions>
+            <exclusion>
+              <artifactId>mail</artifactId>
+              <groupId>javax.mail</groupId>
+            </exclusion>
+          </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
@@ -113,11 +131,23 @@
         <groupId>org.apache.james</groupId>
         <artifactId>james-server-mailetcontainer-api</artifactId>
           <version>${james.server.version}</version>
+          <exclusions>
+            <exclusion>
+              <artifactId>mail</artifactId>
+              <groupId>javax.mail</groupId>
+            </exclusion>
+          </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.james</groupId>
       <artifactId>james-server-queue-api</artifactId>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
@@ -131,6 +161,10 @@
         <exclusion>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
+        </exclusion>
+        <exclusion>
+          <artifactId>mail</artifactId>
+          <groupId>javax.mail</groupId>
         </exclusion>
         </exclusions>
     </dependency>
@@ -179,11 +213,23 @@
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-core</artifactId>
         <scope>runtime</scope>
+        <exclusions>
+          <exclusion>
+            <artifactId>tools</artifactId>
+            <groupId>com.sun</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-spring</artifactId>
         <scope>runtime</scope>
+        <exclusions>
+          <exclusion>
+            <artifactId>tools</artifactId>
+            <groupId>com.sun</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.xbean</groupId>
@@ -216,12 +262,24 @@
         <artifactId>james-server-mailetcontainer-camel</artifactId>
         <scope>runtime</scope>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>james-server-mailbox-adapter</artifactId>
         <scope>runtime</scope>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
@@ -246,12 +304,24 @@
         <artifactId>james-server-util</artifactId>
         <scope>runtime</scope>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>james-server-data-library</artifactId>
         <scope>runtime</scope>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
@@ -265,6 +335,12 @@
         <artifactId>james-server-protocols-smtp</artifactId>
         <scope>runtime</scope>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
@@ -276,42 +352,84 @@
         <artifactId>james-server-protocols-lmtp</artifactId>
         <scope>runtime</scope>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>james-server-protocols-pop3</artifactId>
         <scope>runtime</scope>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>james-server-fetchmail</artifactId>
         <scope>runtime</scope>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>james-server-queue-file</artifactId>
         <scope>runtime</scope>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>james-server-queue-jms</artifactId>
         <scope>runtime</scope>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>james-server-queue-activemq</artifactId>
         <scope>runtime</scope>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>james-server-mailets</artifactId>
         <scope>runtime</scope>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
         <!-- Comment jackrabbit dependency to avoid lucene version clash with mailbox-lucene (JAMES-1297)
             <dependency>
@@ -335,6 +453,12 @@
         <groupId>org.apache.james</groupId>
         <artifactId>apache-james-mailbox-jpa</artifactId>
         <scope>runtime</scope>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
@@ -349,28 +473,56 @@
             <artifactId>hadoop-core</artifactId>
             <groupId>org.apache.hadoop</groupId>
           </exclusion>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
         </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>apache-james-mailbox-lucene</artifactId>
         <scope>runtime</scope>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>apache-james-mailbox-jcr</artifactId>
         <scope>runtime</scope>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>apache-james-mailbox-memory</artifactId>
         <scope>runtime</scope>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
         <artifactId>james-server-data-file</artifactId>
         <scope>runtime</scope>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
@@ -383,6 +535,12 @@
         <artifactId>james-server-data-jdbc</artifactId>
         <scope>runtime</scope>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.apache.james</groupId>
@@ -405,6 +563,10 @@
           <artifactId>hadoop-core</artifactId>
           <groupId>org.apache.hadoop</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>mail</artifactId>
+          <groupId>javax.mail</groupId>
+        </exclusion>
         </exclusions>
         <version>${james.server.version}</version>
     </dependency>
@@ -413,6 +575,12 @@
         <artifactId>james-server-data-jcr</artifactId>
         <scope>runtime</scope>
         <version>${james.server.version}</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>mail</artifactId>
+            <groupId>javax.mail</groupId>
+          </exclusion>
+        </exclusions>
     </dependency>
 
 <!--
