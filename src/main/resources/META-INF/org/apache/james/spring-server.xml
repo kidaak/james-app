@@ -284,6 +284,7 @@
         <constructor-arg index="4">
           <set>
             <value>ACL</value>
+            <value>MOVE</value>
           </set>
        </constructor-arg>
     </bean>
